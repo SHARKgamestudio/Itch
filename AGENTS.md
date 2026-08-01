@@ -30,4 +30,19 @@ Après un push, tu dois vérifier que le thème est bien déployé et rendu corr
    (ex. la couleur de fond).
 3. Contrôle que la page itch.io est rendue avec le thème attendu (aucun style cassé).
 
+### Pièges connus
+
+- **itch.io est protégé par Cloudflare** (« Just a moment… » / « Performing security verification »).
+  Un simple fetch HTTP peut renvoyer 403 et un navigateur headless peut rester bloqué sur le challenge.
+  - Si c'est le cas, tu peux quand même vérifier l'essentiel via GitHub Pages :
+    `https://SHARKgamestudio.github.io/Itch/style.min.css` (doit contenir les changements attendus)
+    et `https://SHARKgamestudio.github.io/Itch/version.txt` (doit contenir le hash du dernier commit).
+  - Pour l'apparence réelle sur itch.io, utilise un vrai navigateur (rendu + console) et
+    vérifie dans la console que le chargement de `style.min.css` ne renvoie pas d'erreur
+    (un `ERR_BLOCKED_BY_ORB` signifie que GitHub Pages renvoie 404 = déploiement KO).
+- **Réponse 404 sur `https://SHARKgamestudio.github.io/Itch/...`** = le site n'est PAS déployé.
+  Causes possibles : dépôt privé (Pages gratuit nécessite un dépôt public), Pages non activé
+  avec la source « GitHub Actions », ou workflow encore en cours (~1 min).
+- **API GitHub en 404** (`api.github.com/repos/SHARKgamestudio/Itch/...`) = dépôt privé (données masquées).
+
 Si quelque chose ne correspond pas, signale-le à l'utilisateur au lieu de considérer la tâche terminée.
