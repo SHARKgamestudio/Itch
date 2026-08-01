@@ -2,8 +2,11 @@
    SHARKstudio — thème itch.io
    Inspiré de https://sharkstudio.fr/portfolio/
    - fond sombre + grain (bruit) + halo violet/bleu
-   - cartes projet : lift + zoom de la miniature au survol
+   - cartes projet 4:5, image pleine carte, zoom + halo + texte au survol
    ============================================================ */
+
+/* Police du portfolio (Space Grotesk) */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap');
 
 /* ---------- Fond ---------- */
 html {
@@ -144,10 +147,13 @@ a:hover {
 
 .game_cell .game_title a {
   display: block;
-  color: #ffffff;
-  font-size: clamp(18px, 1.5vw, 28px);
+  font-family: "Space Grotesk", "Inter", system-ui, sans-serif;
+  font-size: clamp(22px, 2.6vw, 30px);
   font-weight: 700;
-  letter-spacing: -0.02em;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  color: #ffffff !important;
+  text-decoration: none;
   transition: color 0.3s ease;
 }
 
