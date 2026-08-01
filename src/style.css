@@ -1,114 +1,136 @@
 /* ============================================================
-   itch.io Custom Theme — SOURCE CSS
-   ------------------------------------------------------------
-   C'est le SEUL fichier à éditer.
-   À chaque push sur main, une GitHub Action minifie ce fichier
-   dans dist/style.min.css et le déploie sur GitHub Pages.
-   L'@import est déjà placé dans l'éditeur de thème itch.io :
-   https://SHARKgamestudio.github.io/Itch/style.min.css
+   SHARKstudio — thème itch.io
+   Inspiré de https://sharkstudio.fr/portfolio/
+   - fond sombre + grain (bruit) + halo violet/bleu
+   - cartes projet : lift + zoom de la miniature au survol
    ============================================================ */
 
-:root {
-  --bg: #cc0000;
-  --bg-alt: #17171f;
-  --surface: #1e1e2a;
-  --text: #e8e8f0;
-  --text-dim: #9a9ab0;
-  --accent: #ff6b9d;
-  --accent-2: #7b6bff;
-  --border: rgba(255, 255, 255, 0.08);
-  --radius: 12px;
-}
-
+/* ---------- Fond ---------- */
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
-  line-height: 1.6;
+  background-color: #0a0a0a;
+  background-image:
+    radial-gradient(1100px 750px at 12% 8%, rgba(88, 28, 135, 0.16), transparent 60%),
+    radial-gradient(1000px 800px at 88% 95%, rgba(30, 58, 138, 0.16), transparent 60%);
+  background-attachment: fixed;
+  color: #e5e5e5;
+  font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+/* Grain de film par-dessus la page (non interactif) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='300'%20height='300'%3E%3Cfilter%20id='n'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.65'%20numOctaves='3'%20stitchTiles='stitch'/%3E%3C/filter%3E%3Crect%20width='100%25'%20height='100%25'%20filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 300px 300px;
 }
 
 a {
-  color: var(--accent);
+  color: #d6d6d6;
   text-decoration: none;
-  transition: color 0.15s ease;
+  transition: color 0.2s ease;
 }
 
 a:hover {
-  color: var(--accent-2);
-  text-decoration: underline;
+  color: #ffffff;
+  text-decoration: none;
 }
 
-/* En-tête de page */
+/* En-tête */
 .header {
-  background: linear-gradient(135deg, var(--bg-alt), var(--surface));
-  border-bottom: 1px solid var(--border);
+  background: #0d0d0d;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .header_game_title {
-  color: var(--text);
+  color: #ffffff;
   font-weight: 700;
 }
 
-/* Grille de jeux (page profil / page de jeux) */
-.game_grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 16px;
-}
-
+/* ---------- Cartes projet (grid itch.io) ---------- */
 .game_cell {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  position: relative;
+  background: #171717;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
   overflow: hidden;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.6);
+  transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1),
+              box-shadow 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform;
 }
 
-.game_cell:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+/* Miniature */
+.game_cell .game_thumb {
+  position: relative;
+  overflow: hidden;
+  background: #111111;
+}
+
+.game_cell .game_thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8;
+  transition: transform 1.2s cubic-bezier(0.23, 1, 0.32, 1),
+              opacity 0.5s ease;
+}
+
+/* Léger dégradé sombre sous la miniature pour fondre dans la carte */
+.game_cell .game_thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.45), transparent 55%);
+}
+
+/* Zone texte */
+.game_cell .game_cell_data {
+  margin: 0;
+  padding: 14px 16px 18px;
+  gap: 5px;
 }
 
 .game_cell .game_title a {
-  color: var(--text);
+  color: #ffffff;
+  font-size: 16px;
   font-weight: 600;
-}
-
-.game_cell .game_title a:hover {
-  color: var(--accent);
+  letter-spacing: 0.2px;
+  transition: color 0.3s ease;
 }
 
 .game_cell .game_author a {
-  color: var(--text-dim);
+  color: rgba(229, 229, 229, 0.62);
+  font-size: 13px;
 }
 
-/* Page de jeu */
-.game_page {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px;
+.game_cell .game_genre {
+  color: rgba(229, 229, 229, 0.42);
+  font-size: 11px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
 }
 
-/* Boutons */
-button,
-.button,
-.action_buttons .button {
-  background: var(--accent);
-  color: #1a0a14;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 16px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: filter 0.15s ease;
+/* ---------- Survol (hover) ---------- */
+.game_cell:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.9);
 }
 
-button:hover,
-.button:hover {
-  filter: brightness(1.1);
+.game_cell:hover .game_thumb img {
+  transform: scale(1.08);
+  opacity: 1;
+}
+
+.game_cell:hover .game_title a {
+  color: #ffffff;
 }
