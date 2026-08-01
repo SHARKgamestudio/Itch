@@ -40,6 +40,14 @@ try {
 }
 fs.writeFileSync(path.join(distDir, 'version.txt'), sha + '\n');
 
+// _headers : pour Cloudflare Pages (recommandé) — force le navigateur à revalider
+// style.min.css à chaque chargement (aucun cache de 10 min).
+// GitHub Pages ignore ce fichier (servi tel quel, sans effet) → compatible.
+fs.writeFileSync(
+  path.join(distDir, '_headers'),
+  '/*\n  Cache-Control: no-cache\n'
+);
+
 console.log('dist/style.min.css genere');
 console.log('  Version : ' + sha);
 console.log('  Taille  : ' + (result.css.length / 1024).toFixed(1) + ' Ko');

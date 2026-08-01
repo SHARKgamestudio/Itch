@@ -47,6 +47,12 @@ Après un push, tu dois vérifier que le thème est bien déployé et rendu corr
   servie depuis le cache du navigateur (ancien thème). Pour connaître la vérité côté serveur, ajoute
   un cache-buster et force le no-store : `fetch(url + '?v=' + Date.now(), { cache: 'no-store' })`.
   Si ça renvoie le nouveau contenu → déploiement OK, c'est juste le cache local (hard refresh Ctrl+F5).
+- **Fix durable (recommandé, cf. README section 4)** : GitHub Pages ne permet pas d'en-têtes
+  personnalisés (`Cache-Control: max-age=600` = ~10 min de cache navigateur). Pour un affichage
+  immédiat de chaque déploiement, servir le CSS via **Cloudflare Pages** : le fichier `dist/_headers`
+  généré par le build contient `Cache-Control: no-cache` → le navigateur revalide à chaque
+  chargement. URL : `https://<projet>.pages.dev/style.min.css` (vérifier aussi
+  `https://<projet>.pages.dev/version.txt`).
 - **API GitHub en 404** (`api.github.com/repos/SHARKgamestudio/Itch/...`) = dépôt privé (données masquées).
 
 Si quelque chose ne correspond pas, signale-le à l'utilisateur au lieu de considérer la tâche terminée.

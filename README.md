@@ -74,9 +74,59 @@ Vérification : ouvre cette URL dans ton navigateur, tu dois voir le CSS minifi�
    ```
 
 3. La GitHub Action build + déploie automatiquement (~1 min).
-4. Recharge ta page itch.io (**Ctrl+F5** pour contourner le cache).
+4. Recharge ta page itch.io :
+   - **Avec Cloudflare Pages** (section 4) : rien à faire, le CSS est revalidé à chaque chargement.
+   - **Avec GitHub Pages uniquement** : fais **Ctrl+F5** pour contourner le cache (max ~10 min).
 
 C'est tout : tu ne retouches plus jamais l'éditeur de thème itch.io.
+
+---
+
+## 4. (Recommandé) Fixer le cache navigateur avec Cloudflare Pages
+
+**Le problème** : GitHub Pages sert `style.min.css` avec `Cache-Control: max-age=600`
+(10 min) et n'autorise pas d'en-têtes personnalisés. Après chaque déploiement, le
+navigateur peut donc afficher l'ancien thème jusqu'à ~10 min (Ctrl+F5 pour forcer).
+
+**La solution** : servir le CSS depuis **Cloudflare Pages** (gratuit, fiable, sans
+limite de bande passante). Il envoie `Cache-Control: no-cache` → le navigateur
+**revalide à chaque chargement** : chaque déploiement est visible immédiatement,
+sans Ctrl+F5. L'`@import` reste une URL **stable** et 100 % automatique.
+
+### 4.1 Créer le projet Cloudflare Pages (une seule fois, ~5 min)
+
+1. Crée un compte gratuit sur https://dash.cloudflare.com (e-mail + mot de passe).
+2. Menu **Workers & Pages** → **Create** → **Pages** → **Connect to Git**.
+3. Choisis le dépôt `SHARKgamestudio/Itch` → **Begin setup**.
+4. Paramètres de build :
+   - **Build command** : `npm ci && npm run build`
+   - **Build output directory** : `dist`
+5. **Save and Deploy**. Le site est publié sur `https://<nom-du-projet>.pages.dev`.
+
+> Le fichier `dist/_headers` (généré automatiquement par `npm run build`) contient
+> `Cache-Control: no-cache` → Cloudflare Pages force la revalidation du navigateur.
+
+### 4.2 Nouvelle URL du CSS (stable)
+
+```
+https://<nom-du-projet>.pages.dev/style.min.css
+```
+
+Vérification : `https://<nom-du-projet>.pages.dev/version.txt` doit afficher le hash du commit.
+
+### 4.3 Mettre à jour l'`@import` itch.io (une seule fois)
+
+Dans l'éditeur de thème itch.io, remplace la première ligne par :
+
+```css
+@import url('https://<nom-du-projet>.pages.dev/style.min.css');
+```
+
+L'URL ne change plus jamais → le flux reste automatique, et chaque push est visible
+**immédiatement** (plus de Ctrl+F5).
+
+> 💡 GitHub Pages reste actif en parallèle (fallback) — l'URL `...github.io/...`
+> continue de fonctionner, elle est juste sujette au cache de 10 min.
 
 ---
 
