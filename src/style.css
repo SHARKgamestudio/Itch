@@ -142,8 +142,10 @@ a:hover {
 }
 
 /* Texte : superposé sur l'image, calé en bas, glisse vers le haut au survol.
-   En flex-wrap : le titre et l'auteur prennent toute la largeur, puis la ligne
-   genre (gauche) + plateformes (droite) se partagent la dernière ligne. */
+   En flex-wrap (row) : le titre et l'auteur prennent toute la largeur, puis la
+   ligne genre (gauche) + plateformes (droite) se partagent la dernière ligne.
+   !important : le CSS de base d'itch.io force flex-direction:column sur
+   .game_cell_data, il faut repasser en row. */
 .game_cell .game_cell_data {
   position: absolute;
   left: 0;
@@ -153,8 +155,9 @@ a:hover {
   margin: 0;
   padding: 14px 16px;
   background: transparent;
-  display: flex;
-  flex-wrap: wrap;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
   align-items: center;
   transform: translateY(10px);
   transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
@@ -163,7 +166,7 @@ a:hover {
 /* Titre et auteur : pleine largeur, chacun sur sa propre ligne */
 .game_cell .game_title,
 .game_cell .game_author {
-  flex: 0 0 100%;
+  flex: 0 0 100% !important;
 }
 
 .game_cell .game_title a {
