@@ -75,10 +75,13 @@ a:hover {
   will-change: transform;
 }
 
-/* Miniature : remplit toute la carte */
+/* Miniature : remplit TOUTE la carte (l'image va jusqu'en bas).
+   !important requis : le CSS de base d'itch.io surcharge sinon la hauteur. */
 .game_cell .game_thumb {
-  position: absolute;
-  inset: 0;
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
   z-index: 0;
   overflow: hidden;
   background: #111111;
@@ -93,9 +96,9 @@ a:hover {
 
 .game_cell .game_thumb img {
   display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
   opacity: 0.8;
   transition: transform 1.2s cubic-bezier(0.23, 1, 0.32, 1),
               opacity 0.5s ease;
@@ -174,9 +177,10 @@ a:hover {
   opacity: 0.55;
 }
 
-/* ---------- Survol (hover) : même animation que le portfolio ---------- */
+/* ---------- Survol (hover) : carte IMMOBILE comme le portfolio ----------
+   La carte ne bouge pas : seule l'image zoome, le halo apparaît,
+   le texte glisse vers le haut, et une ombre douce se dessine. */
 .game_cell:hover {
-  transform: translateY(-12px);
   box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.9);
 }
 
