@@ -141,7 +141,9 @@ a:hover {
   transition: opacity 0.7s ease;
 }
 
-/* Texte : superposé sur l'image, calé en bas, glisse vers le haut au survol */
+/* Texte : superposé sur l'image, calé en bas, glisse vers le haut au survol.
+   En flex-wrap : le titre et l'auteur prennent toute la largeur, puis la ligne
+   genre (gauche) + plateformes (droite) se partagent la dernière ligne. */
 .game_cell .game_cell_data {
   position: absolute;
   left: 0;
@@ -151,8 +153,17 @@ a:hover {
   margin: 0;
   padding: 14px 16px;
   background: transparent;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   transform: translateY(10px);
   transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Titre et auteur : pleine largeur, chacun sur sa propre ligne */
+.game_cell .game_title,
+.game_cell .game_author {
+  flex: 0 0 100%;
 }
 
 .game_cell .game_title a {
@@ -163,8 +174,18 @@ a:hover {
   line-height: 1.2;
   letter-spacing: -0.025em;
   color: #ffffff !important;
-  text-decoration: none;
+  text-decoration: none !important;
   transition: color 0.3s ease;
+}
+
+/* Jamais de soulignement ni de changement de couleur sur le titre (lien),
+   même au survol / focus / visite — le CSS de base d'itch.io en remet sinon. */
+.game_cell .game_title a:hover,
+.game_cell .game_title a:focus,
+.game_cell .game_title a:active,
+.game_cell .game_title a:visited {
+  color: #ffffff !important;
+  text-decoration: none !important;
 }
 
 .game_cell .game_author a {
@@ -174,11 +195,13 @@ a:hover {
 }
 
 .game_cell .game_genre {
-  display: inline-block;
+  display: inline-flex !important;
+  align-items: center;
   margin-top: 8px;
   padding: 3px 10px;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 10px;
+  font-size: 10px !important;
+  line-height: 1.4;
   letter-spacing: 0.3px;
   text-transform: uppercase;
   color: rgba(229, 229, 229, 0.72);
@@ -188,9 +211,25 @@ a:hover {
   backdrop-filter: blur(4px);
 }
 
+/* Plateformes : mêmes boîte/pilule que le genre, mais alignées à droite */
 .game_cell .game_platform {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
   margin-top: 8px;
-  opacity: 0.55;
+  margin-left: auto;
+  padding: 3px 10px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  backdrop-filter: blur(4px);
+  opacity: 1;
+}
+
+.game_cell .game_platform .icon {
+  font-size: 14px;
+  line-height: 1;
+  color: rgba(229, 229, 229, 0.8);
 }
 
 /* ---------- Survol (hover) : carte IMMOBILE comme le portfolio ----------
