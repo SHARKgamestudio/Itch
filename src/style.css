@@ -60,12 +60,14 @@ a:hover {
 /* ---------- Cartes projet (grid itch.io) ---------- */
 /* Grid : mêmes dimensions que le portfolio — 3 colonnes, gap 32px,
    largeur 1070px → cartes 4:5 de ~335px de large (comme le portfolio).
-   Le contenu itch.io est limité à 960px ; on étend le grid au centre. */
+   Le contenu itch.io est limité à 960px ; on étend le grid au centre.
+   !important : le CSS de base d'itch.io (.mode_grid .user_game_grid
+   et .base_widget) force des colonnes à 306px et remet la marge à 0. */
 .game_grid_widget {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   gap: 32px;
   width: min(1070px, calc(100vw - 64px));
-  margin-inline: auto;
+  margin-inline: auto !important;
 }
 
 /* Carte : même ratio 4:5 que les cartes du portfolio (hauteur identique) */
