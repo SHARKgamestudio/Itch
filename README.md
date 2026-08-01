@@ -101,7 +101,7 @@ sans Ctrl+F5. L'`@import` reste une URL **stable** et 100 % automatique.
 4. Paramètres de build :
    - **Build command** : `npm ci && npm run build`
    - **Build output directory** : `dist`
-5. **Save and Deploy**. Le site est publié sur `https://<nom-du-projet>.pages.dev`.
+5. **Save and Deploy**. Le site est publié sur `https://itch-dhr.pages.dev`.
 
 > Le fichier `dist/_headers` (généré automatiquement par `npm run build`) contient
 > `Cache-Control: no-cache` → Cloudflare Pages force la revalidation du navigateur.
@@ -109,17 +109,17 @@ sans Ctrl+F5. L'`@import` reste une URL **stable** et 100 % automatique.
 ### 4.2 Nouvelle URL du CSS (stable)
 
 ```
-https://<nom-du-projet>.pages.dev/style.min.css
+https://itch-dhr.pages.dev/style.min.css
 ```
 
-Vérification : `https://<nom-du-projet>.pages.dev/version.txt` doit afficher le hash du commit.
+Vérification : `https://itch-dhr.pages.dev/version.txt` doit afficher le hash du commit.
 
 ### 4.3 Mettre à jour l'`@import` itch.io (une seule fois)
 
 Dans l'éditeur de thème itch.io, remplace la première ligne par :
 
 ```css
-@import url('https://<nom-du-projet>.pages.dev/style.min.css');
+@import url('https://itch-dhr.pages.dev/style.min.css');
 ```
 
 L'URL ne change plus jamais → le flux reste automatique, et chaque push est visible

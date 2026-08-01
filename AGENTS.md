@@ -51,8 +51,8 @@ Après un push, tu dois vérifier que le thème est bien déployé et rendu corr
   personnalisés (`Cache-Control: max-age=600` = ~10 min de cache navigateur). Pour un affichage
   immédiat de chaque déploiement, servir le CSS via **Cloudflare Pages** : le fichier `dist/_headers`
   généré par le build contient `Cache-Control: no-cache` → le navigateur revalide à chaque
-  chargement. URL : `https://<projet>.pages.dev/style.min.css` (vérifier aussi
-  `https://<projet>.pages.dev/version.txt`).
+  chargement. URL : `https://itch-dhr.pages.dev/style.min.css` (vérifier aussi
+  `https://itch-dhr.pages.dev/version.txt`).
 - **API GitHub en 404** (`api.github.com/repos/SHARKgamestudio/Itch/...`) = dépôt privé (données masquées).
 
 Si quelque chose ne correspond pas, signale-le à l'utilisateur au lieu de considérer la tâche terminée.
