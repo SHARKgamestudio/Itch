@@ -43,6 +43,10 @@ Après un push, tu dois vérifier que le thème est bien déployé et rendu corr
 - **Réponse 404 sur `https://SHARKgamestudio.github.io/Itch/...`** = le site n'est PAS déployé.
   Causes possibles : dépôt privé (Pages gratuit nécessite un dépôt public), Pages non activé
   avec la source « GitHub Actions », ou workflow encore en cours (~1 min).
+- **Cache navigateur** : même après un déploiement réussi, l'URL stable `style.min.css` peut rester
+  servie depuis le cache du navigateur (ancien thème). Pour connaître la vérité côté serveur, ajoute
+  un cache-buster et force le no-store : `fetch(url + '?v=' + Date.now(), { cache: 'no-store' })`.
+  Si ça renvoie le nouveau contenu → déploiement OK, c'est juste le cache local (hard refresh Ctrl+F5).
 - **API GitHub en 404** (`api.github.com/repos/SHARKgamestudio/Itch/...`) = dépôt privé (données masquées).
 
 Si quelque chose ne correspond pas, signale-le à l'utilisateur au lieu de considérer la tâche terminée.
