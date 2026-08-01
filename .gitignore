@@ -1,0 +1,5 @@
+# Dépendances
+node_modules/
+
+# Sortie de build (générée par la GitHub Action, pas besoin de la committer)
+dist/

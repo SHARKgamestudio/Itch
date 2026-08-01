@@ -1,0 +1,114 @@
+/* ============================================================
+   itch.io Custom Theme — SOURCE CSS
+   ------------------------------------------------------------
+   C'est le SEUL fichier à éditer.
+   À chaque push sur main, une GitHub Action minifie ce fichier
+   dans dist/style.min.css et le déploie sur GitHub Pages.
+   L'@import est déjà placé dans l'éditeur de thème itch.io :
+   https://SHARKgamestudio.github.io/Itch/style.min.css
+   ============================================================ */
+
+:root {
+  --bg: #0f0f14;
+  --bg-alt: #17171f;
+  --surface: #1e1e2a;
+  --text: #e8e8f0;
+  --text-dim: #9a9ab0;
+  --accent: #ff6b9d;
+  --accent-2: #7b6bff;
+  --border: rgba(255, 255, 255, 0.08);
+  --radius: 12px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+a:hover {
+  color: var(--accent-2);
+  text-decoration: underline;
+}
+
+/* En-tête de page */
+.header {
+  background: linear-gradient(135deg, var(--bg-alt), var(--surface));
+  border-bottom: 1px solid var(--border);
+}
+
+.header_game_title {
+  color: var(--text);
+  font-weight: 700;
+}
+
+/* Grille de jeux (page profil / page de jeux) */
+.game_grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+.game_cell {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.game_cell:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.game_cell .game_title a {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.game_cell .game_title a:hover {
+  color: var(--accent);
+}
+
+.game_cell .game_author a {
+  color: var(--text-dim);
+}
+
+/* Page de jeu */
+.game_page {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+/* Boutons */
+button,
+.button,
+.action_buttons .button {
+  background: var(--accent);
+  color: #1a0a14;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: filter 0.15s ease;
+}
+
+button:hover,
+.button:hover {
+  filter: brightness(1.1);
+}
