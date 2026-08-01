@@ -153,7 +153,10 @@ a:hover {
   bottom: 0;
   z-index: 3;
   margin: 0;
-  padding: 14px 16px;
+  /* Padding bas généreux (comme le portfolio, 24px) : le contenu n'est pas
+     collé au bas de la carte. (Le translateY(10px) au repos décale de 10px,
+     d'où un padding-bas un peu plus grand que sur le portfolio.) */
+  padding: 14px 16px 28px;
   background: transparent;
   display: flex !important;
   flex-direction: row !important;
@@ -163,8 +166,11 @@ a:hover {
   transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-/* Titre et auteur : pleine largeur, chacun sur sa propre ligne */
+/* Titre, description et auteur : pleine largeur, chacun sur sa propre ligne.
+   → les tags (genre + plateformes) commencent TOUJOURS sous la description,
+   jamais à côté (cas des descriptions courtes). */
 .game_cell .game_title,
+.game_cell .game_text,
 .game_cell .game_author {
   flex: 0 0 100% !important;
 }
