@@ -55,23 +55,40 @@ a:hover {
 }
 
 /* ---------- Cartes projet (grid itch.io) ---------- */
+/* Espacement du grid, plus aéré comme le portfolio */
+.game_grid_widget {
+  gap: 28px;
+}
+
+/* Carte : même ratio 4:5 que les cartes du portfolio (hauteur identique) */
 .game_cell {
   position: relative;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  align-self: start;
   background: #171717;
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.6);
   transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1),
               box-shadow 0.8s cubic-bezier(0.23, 1, 0.32, 1);
   will-change: transform;
 }
 
-/* Miniature */
+/* Miniature : remplit toute la carte */
 .game_cell .game_thumb {
-  position: relative;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
   overflow: hidden;
   background: #111111;
+}
+
+.game_cell .game_thumb a,
+.game_cell .game_thumb .thumb_link {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .game_cell .game_thumb img {
@@ -84,43 +101,80 @@ a:hover {
               opacity 0.5s ease;
 }
 
-/* Léger dégradé sombre sous la miniature pour fondre dans la carte */
+/* Voile dégradé en bas de la carte — pas de fond uni pour le texte,
+   le texte est posé sur l'image avec un dégradé noir vers le haut */
 .game_cell .game_thumb::after {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 1;
   pointer-events: none;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.45), transparent 55%);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.92), rgba(0, 0, 0, 0.45) 50%, rgba(0, 0, 0, 0));
 }
 
-/* Zone texte */
+/* Halo violet/bleu au survol (mix-blend-overlay, comme le portfolio) */
+.game_cell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(88, 28, 135, 0.2), rgba(30, 58, 138, 0.2));
+  opacity: 0;
+  mix-blend-mode: overlay;
+  transition: opacity 0.7s ease;
+}
+
+/* Texte : superposé sur l'image, calé en bas, glisse vers le haut au survol */
 .game_cell .game_cell_data {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
   margin: 0;
-  padding: 14px 16px 18px;
-  gap: 5px;
+  padding: 14px 16px;
+  background: transparent;
+  transform: translateY(10px);
+  transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .game_cell .game_title a {
+  display: block;
   color: #ffffff;
-  font-size: 16px;
-  font-weight: 600;
-  letter-spacing: 0.2px;
+  font-size: clamp(18px, 1.5vw, 28px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
   transition: color 0.3s ease;
 }
 
 .game_cell .game_author a {
-  color: rgba(229, 229, 229, 0.62);
-  font-size: 13px;
+  color: rgba(229, 229, 229, 0.55);
+  font-size: 12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 .game_cell .game_genre {
-  color: rgba(229, 229, 229, 0.42);
-  font-size: 11px;
-  letter-spacing: 0.8px;
+  display: inline-block;
+  margin-top: 8px;
+  padding: 3px 10px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.3px;
   text-transform: uppercase;
+  color: rgba(229, 229, 229, 0.72);
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  backdrop-filter: blur(4px);
 }
 
-/* ---------- Survol (hover) ---------- */
+.game_cell .game_platform {
+  margin-top: 8px;
+  opacity: 0.55;
+}
+
+/* ---------- Survol (hover) : même animation que le portfolio ---------- */
 .game_cell:hover {
   transform: translateY(-12px);
   box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.9);
@@ -131,6 +185,10 @@ a:hover {
   opacity: 1;
 }
 
-.game_cell:hover .game_title a {
-  color: #ffffff;
+.game_cell:hover::after {
+  opacity: 1;
+}
+
+.game_cell:hover .game_cell_data {
+  transform: translateY(0);
 }
